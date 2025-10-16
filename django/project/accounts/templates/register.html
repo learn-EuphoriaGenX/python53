@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Zay-Resell Register
+{% endblock title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static "assets/css/auth.css" %}">
+{% endblock style %}
+
+
+{% block content %}
+<div class="container px-4 py-5 mx-auto">
+    <div class="card card0">
+        <div class="d-flex flex-lg-row flex-column-reverse">
+            <div class="card card1">
+                <div class="row justify-content-center my-auto">
+                    <div class="col-md-8 col-10 my-5 row justify-content-center">
+                       <div class="d-flex flex-column">
+ <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+                         Zay
+                        </a>
+                        <h3 class="mb-5 text-center heading">We are Tidi, We are Zays!</h3>
+                       </div>
+
+                        <h6 class="msg-info">Please register your account</h6>
+
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="form-group ">
+                            <label class="form-control-label text-success">Username</label>
+                            <input type="text" id="email" name="username" placeholder="John Doe" class="form-control">
+                        </div>
+
+                        <div class="form-group form-group-p">
+                            <label class="form-control-label text-success">Email</label>
+                            <input type="email" id="email1" name="email" placeholder="johndoe@gmail.com" class="form-control">
+                        </div>
+
+                        <div class="form-group form-group-p">
+                            <label class="form-control-label text-success">Password</label>
+                            <input type="password" id="psw" name="password" placeholder="Password" class="form-control">
+                        </div>
+
+                        <div class="row justify-content-center my-3 px-3">
+                            <button class="btn-block btn-color">Register in Zays</button>
+                        </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="bottom text-center mb-5">
+                    <p href="#" class="sm-text mx-auto mb-3">Already have an account?<a href="{% url "login" %}" class="btn btn-white ml-2">Login now</a></p>
+                </div>
+            </div>  
+            <div class="card card2 rounded">
+                <div class="my-auto mx-md-5 px-md-5 right">
+                    <h3 class="text-white">We are more than just a company</h3>
+                    <small class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
