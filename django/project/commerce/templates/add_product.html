@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %}
+Zap-Resell Add Product(Admin)
+{% endblock title %}
+
+{% block content %}
+<div>
+
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow-lg border-0 rounded-3">
+          <div class="card-header bg-success text-white text-center fs-5 fw-bold">
+            Add New Product
+          </div>
+          <div class="card-body p-4">
+            <form action="/add-product" method="POST" enctype="multipart/form-data">
+              
+              <!-- Product Name -->
+              <div class="mb-3">
+                <label for="productName" class="form-label fw-semibold">Product Name</label>
+                <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" required>
+              </div>
+
+              <!-- Product Category -->
+              <div class="mb-3">
+                <label for="category" class="form-label fw-semibold">Category</label>
+                <select class="form-select" id="category" name="category" required>
+                  <option value="">Select category</option>
+                  <option value="Luxury">Luxury</option>
+                  <option value="Sport Wear">Sport Wear</option>
+                  <option value="Men's Shoes">Men's Shoes</option>
+                  <option value="Women's Shoes">Women's Shoes</option>
+                  <option value="Popular Dress">Popular Dress</option>
+                </select>
+              </div>
+
+              <!-- Original Price -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="originalPrice" class="form-label fw-semibold">Original Price (₹)</label>
+                  <input type="number" class="form-control" id="originalPrice" name="originalPrice" placeholder="e.g. 1999" required>
+                </div>
+
+                <!-- Discounted Price -->
+                <div class="col-md-6 mb-3">
+                  <label for="discountedPrice" class="form-label fw-semibold">Discounted Price (₹)</label>
+                  <input type="number" class="form-control" id="discountedPrice" name="discountedPrice" placeholder="e.g. 1499" required>
+                </div>
+              </div>
+
+              <!-- Product Image -->
+              <div class="mb-3">
+                <label for="productImage" class="form-label fw-semibold">Product Image</label>
+                <input class="form-control" type="file" id="productImage" name="productImage" accept="image/*" required>
+                <div class="form-text">Upload a .jpg, .png, or .webp image</div>
+              </div>
+
+              <!-- Product Description -->
+              <div class="mb-3">
+                <label for="description" class="form-label fw-semibold">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter product details" required></textarea>
+              </div>
+
+              <!-- Stock Quantity -->
+              <div class="mb-3">
+                <label for="stock" class="form-label fw-semibold">Stock Quantity</label>
+                <input type="number" class="form-control" id="stock" name="stock" placeholder="Enter available quantity" required>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-success btn-lg">Add Product</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock content %}

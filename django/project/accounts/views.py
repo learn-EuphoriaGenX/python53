@@ -5,6 +5,10 @@ from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 def Login(request):
+
+    if request.user.is_authenticated:
+        return redirect('home')
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -31,6 +35,9 @@ def Login(request):
     return render(request, 'login.html')
 
 def Register(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')
@@ -54,6 +61,11 @@ def Register(request):
     return render(request, 'register.html')
 
 def Logout(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     logout(request)
     messages.success(request, 'You have been logged out.')
     return redirect('login')
+
+def Admin_Restricted(request):
+    return render(request, 'admin-restricted.html')
