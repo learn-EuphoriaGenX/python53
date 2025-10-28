@@ -16,24 +16,24 @@ Zap-Resell Add Product(Admin)
             Add New Product
           </div>
           <div class="card-body p-4">
-            <form action="/add-product" method="POST" enctype="multipart/form-data">
-              
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
               <!-- Product Name -->
               <div class="mb-3">
                 <label for="productName" class="form-label fw-semibold">Product Name</label>
-                <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" required>
+                <input type="text" class="form-control" id="productName" name="productName"
+                  placeholder="Enter product name">
               </div>
 
               <!-- Product Category -->
               <div class="mb-3">
                 <label for="category" class="form-label fw-semibold">Category</label>
-                <select class="form-select" id="category" name="category" required>
+                <select class="form-select" id="category" name="category">
                   <option value="">Select category</option>
-                  <option value="Luxury">Luxury</option>
-                  <option value="Sport Wear">Sport Wear</option>
-                  <option value="Men's Shoes">Men's Shoes</option>
-                  <option value="Women's Shoes">Women's Shoes</option>
-                  <option value="Popular Dress">Popular Dress</option>
+                  {% for category in categories %}
+                  <option value="{{category.id}}">{{category.name}}</option>
+                  {% endfor %}
+
                 </select>
               </div>
 
@@ -41,34 +41,50 @@ Zap-Resell Add Product(Admin)
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="originalPrice" class="form-label fw-semibold">Original Price (₹)</label>
-                  <input type="number" class="form-control" id="originalPrice" name="originalPrice" placeholder="e.g. 1999" required>
+                  <input type="number" class="form-control" id="originalPrice" name="originalPrice"
+                    placeholder="e.g. 1999">
                 </div>
 
                 <!-- Discounted Price -->
                 <div class="col-md-6 mb-3">
                   <label for="discountedPrice" class="form-label fw-semibold">Discounted Price (₹)</label>
-                  <input type="number" class="form-control" id="discountedPrice" name="discountedPrice" placeholder="e.g. 1499" required>
+                  <input type="number" class="form-control" id="discountedPrice" name="discountedPrice"
+                    placeholder="e.g. 1499">
                 </div>
               </div>
 
               <!-- Product Image -->
               <div class="mb-3">
                 <label for="productImage" class="form-label fw-semibold">Product Image</label>
-                <input class="form-control" type="file" id="productImage" name="productImage" accept="image/*" required>
+                <input class="form-control" type="file" id="productImage" name="productImage" accept="image/*">
                 <div class="form-text">Upload a .jpg, .png, or .webp image</div>
               </div>
 
               <!-- Product Description -->
               <div class="mb-3">
                 <label for="description" class="form-label fw-semibold">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter product details" required></textarea>
+                <textarea class="form-control" id="description" name="description" rows="3"
+                  placeholder="Enter product details"></textarea>
               </div>
 
               <!-- Stock Quantity -->
               <div class="mb-3">
                 <label for="stock" class="form-label fw-semibold">Stock Quantity</label>
-                <input type="number" class="form-control" id="stock" name="stock" placeholder="Enter available quantity" required>
+                <input type="number" class="form-control" id="stock" name="stock"
+                  placeholder="Enter available quantity">
               </div>
+
+              <div class="mb-3">
+                <div class="">
+                  <input class="form-check-input" type="checkbox" value="" name="isFeatured" id="flexCheckChecked"
+                    checked>
+                  <label class="form-check-label ms-3" for="flexCheckChecked">
+                    Add product to featured list
+                  </label>
+                </div>
+              </div>
+
+
 
               <!-- Submit Button -->
               <div class="d-grid mt-4">

@@ -92,6 +92,7 @@
                     data-bs-target="#templatemo_search">
                     <i class="fa fa-fw fa-search text-dark mr-2"></i>
                 </a>
+               {% if not user.is_superuser %}
                 <a class="nav-icon position-relative text-decoration-none" href="#">
                     <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                     <span
@@ -102,6 +103,7 @@
                     <span
                         class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                 </a>
+               {% endif %}
                 <span> Hello, <b class="text-success">{{ user.username }}</b> </span>
             </div>
             {% endif %}

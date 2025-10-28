@@ -112,23 +112,30 @@ Welcome To Zay-Resell
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="{% static "/assets/img/category_img_01.jpg" %}" class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">Watches</h5>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="{% static "/assets/img/category_img_02.jpg" %}" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Shoes</h2>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="{% static "/assets/img/category_img_03.jpg" %}" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Accessories</h2>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
+    
+
+
+  <div class="row g-4">
+    {% for category in categories %}
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="category-card text-center p-4 shadow-sm rounded-4 bg-white h-100">
+        <div class="image-container position-relative mx-auto mb-3">
+          <img
+            src="{{ category.image.url }}"
+            class="rounded-circle img-fluid border border-3 border-success"
+            style="width: 180px; height: 180px; object-fit: cover;"
+            alt="{{ category.name }}"
+          />
         </div>
+        <h2 class="h5 mt-3 mb-2 fw-semibold">{{ category.name }}</h2>
+        <a href="#" class="btn btn-success px-4 py-2 rounded-pill shadow-sm">Go Shop</a>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted">No Categories Available</p>
+    {% endfor %}
+  </div>
+</section>
     </section>
 
 
@@ -145,58 +152,11 @@ Welcome To Zay-Resell
                 </div>
             </div>
             <div class="row">
+                {% for product in products %}
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                         <a href="shop-single.html">
-                            <img src="{% static "/assets/img/feature_prod_01.jpg" %}" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <ul class="list-unstyled d-flex justify-content-between">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                                <li class="text-muted text-right">$240.00</li>
-                            </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Gym Weight</a>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia deserunt.
-                            </p>
-                            <p class="text-muted">Reviews (24)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img src="{% static "/assets/img/feature_prod_02.jpg" %}" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <ul class="list-unstyled d-flex justify-content-between">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                                <li class="text-muted text-right">$480.00</li>
-                            </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Cloud Nike Shoes</a>
-                            <p class="card-text">
-                                Aenean gravida dignissim finibus. Nullam ipsum diam, posuere vitae pharetra sed, commodo ullamcorper.
-                            </p>
-                            <p class="text-muted">Reviews (48)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img src="{% static "/assets/img/feature_prod_03.jpg" %}" class="card-img-top" alt="...">
+                            <img src="{{product.image.url}}" style="height:300px; object-fit: cover;" class="card-img-top" alt="{{product.name}}">
                         </a>
                         <div class="card-body">
                             <ul class="list-unstyled d-flex justify-content-between">
@@ -207,16 +167,21 @@ Welcome To Zay-Resell
                                     <i class="text-warning fa fa-star"></i>
                                     <i class="text-warning fa fa-star"></i>
                                 </li>
-                                <li class="text-muted text-right">$360.00</li>
+                                <li class="text-success text-right">₹ {{product.discounted_price}}</li>
                             </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Summer Addides Shoes</a>
-                            <p class="card-text">
-                                Curabitur ac mi sit amet diam luctus porta. Phasellus pulvinar sagittis diam, et scelerisque ipsum lobortis nec.
+                            <a href="shop-single.html" class="h3 text-decoration-none text-dark">{{product.name| truncatewords:9}}</a>
+                            <p class="card-text mt-2">
+                                {{product.description|truncatewords:15}}
                             </p>
-                            <p class="text-muted">Reviews (74)</p>
+                            <a href="#" class="btn btn-success px-4 py-2 rounded-pill shadow-sm">Add to Cart</a>
                         </div>
                     </div>
                 </div>
+                {% empty %}
+                <p class="text-center text-success">No Featured Products Available</p>
+                {% endfor %}
+               
+                
             </div>
         </div>
     </section>

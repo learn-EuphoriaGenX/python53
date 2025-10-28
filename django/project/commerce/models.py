@@ -18,6 +18,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product_images/')
     description = models.TextField()
     stock = models.PositiveIntegerField()
+    is_featured = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.name} Product'
