@@ -11,11 +11,18 @@ class Category(models.Model):
     
 # product model
 class Product(models.Model):
+    gender_choices = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Unisex', 'Unisex'),
+    ]
+
     name = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     original_price = models.DecimalField(max_digits=10, decimal_places=2)
     discounted_price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='product_images/')
+    gender = models.CharField(max_length=50, choices=gender_choices, default='Unisex')
     description = models.TextField()
     stock = models.PositiveIntegerField()
     is_featured = models.BooleanField(default=False)

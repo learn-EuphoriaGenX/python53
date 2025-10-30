@@ -54,10 +54,23 @@ Zap-Resell Add Product(Admin)
               </div>
 
               <!-- Product Image -->
-              <div class="mb-3">
-                <label for="productImage" class="form-label fw-semibold">Product Image</label>
-                <input class="form-control" type="file" id="productImage" name="productImage" accept="image/*">
-                <div class="form-text">Upload a .jpg, .png, or .webp image</div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="productImage" class="form-label fw-semibold">Product Image</label>
+                  <input class="form-control" type="file" id="productImage" name="productImage" accept="image/*">
+                  <div class="form-text">Upload a .jpg, .png, or .webp image</div>
+                </div>
+
+                <!-- gender dropdown -->
+                <div class="col-md-6 mb-3">
+                  <label for="gender" class="form-label fw-semibold">Gender</label>
+                  <select class="form-select" id="gender" name="gender">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Unisex">Unisex</option>
+                  </select>
+                </div>
               </div>
 
               <!-- Product Description -->

@@ -7,11 +7,44 @@ from .models import Category, Product, Cart, Order
 @login_required( login_url='login' )
 def Shop(request):
     categories = Category.objects.all()
-    data = { 'categories': categories }
+    products = Product.objects.all()
+
+    if 'cat' in request.GET:
+        category_id = request.GET['cat']
+        if Category.objects.filter(id=category_id).exists():
+            category = Category.objects.get(id=category_id)
+            products = products.filter(category=category)
+        else:
+            messages.error(request, 'Selected category does not exist.')
+            return redirect('shop')
+
+    if 'type' in request.GET:
+        product_type = request.GET['type']
+        if product_type in ['Male', 'Female', 'Unisex']:
+            products = products.filter(gender=product_type)  
+        elif product_type == 'all':
+            pass
+        else:
+            messages.error(request, 'Invalid product type selected.')
+            return redirect('shop') 
+        
+    if 'sort' in request.GET:
+        sort_option = request.GET['sort']
+        if sort_option == 'low':
+            products = products.order_by('discounted_price')
+        elif sort_option == 'high':
+            products = products.order_by('-discounted_price')
+        elif sort_option == 'featured':
+            products = products.filter(is_featured=True)
+        else:
+            messages.error(request, 'Invalid sorting option selected.')
+            return redirect('shop')
+
+    data = { 'categories': categories, 'products': products }
     return render(request, 'shop.html', data)
 
 @login_required( login_url='login' )
-def Add_Category(request):
+def Add_Category(request): 
     if not request.user.is_superuser:
         return  redirect('restrict')
     
