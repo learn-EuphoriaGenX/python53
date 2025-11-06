@@ -36,7 +36,7 @@ Zap-Resell Shop
             {% for category in categories %}
             <li class="pb-3">
                 <a href="javascript:void(0)" 
-                class="collapsed d-flex justify-content-between h3 text-decoration-none category-link"
+                class="collapsed text-dark d-flex justify-content-between h3 text-decoration-none category-link"
                 data-cat="{{ category.id }}">
                 {{ category.name }}
                 <i class="fa fa-fw fa-chevron-circle-right mt-1"></i>
@@ -50,35 +50,37 @@ Zap-Resell Shop
 
 
         <div class="col-lg-9">
-            <div class="row">
+            <div class="column" style="display: flex;
+    align-items: center;
+    justify-content: space-between;">
                 <ul id="typeList" class="list-inline shop-top-menu pb-3 pt-1">
-    <li class="list-inline-item">
-        <a href="javascript:void(0)" class="h3 text-dark text-decoration-none mr-3 type-link" data-type="all">All</a>
-    </li>
-    <li class="list-inline-item">
-        <a href="javascript:void(0)" class="h3 text-dark text-decoration-none mr-3 type-link" data-type="Male">Men's</a>
-    </li>
-    <li class="list-inline-item">
-        <a href="javascript:void(0)" class="h3 text-dark text-decoration-none mr-3 type-link" data-type="Female">Women's</a>
-    </li>
-    <li class="list-inline-item">
-        <a href="javascript:void(0)" class="h3 text-dark text-decoration-none type-link" data-type="Unisex">Unisex's</a>
-    </li>
-</ul>
+                    <li class="list-inline-item">
+                        <a href="javascript:void(0)" class="h3 text-dark text-decoration-none mr-3 type-link" data-type="all">All</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="javascript:void(0)" class="h3 text-dark text-decoration-none mr-3 type-link" data-type="Male">Men's</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="javascript:void(0)" class="h3 text-dark text-decoration-none mr-3 type-link" data-type="Female">Women's</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="javascript:void(0)" class="h3 text-dark text-decoration-none type-link" data-type="Unisex">Unisex's</a>
+                    </li>
+                </ul>
 
                 <div class="col-md-6 pb-4">
-                <div class="relative w-full d-flex max-w-xs">
-                    <select id="sort"
-                    class="form-control appearance-none w-full rounded-lg border border-gray-300 px-4 py-2 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
-                    <option value="featured">Featured</option>
-                    <option value="low">↑ Price (Low to High)</option>
-                    <option value="high">↓ Price (High to Low)</option>
-                    </select>
-                    <!-- Custom dropdown arrow -->
-                    <span style="position: relative; top: 9px; right: 25px;" class="pointer-events-none">
-                    ▼
-                    </span>
-                </div>
+                    <div class="relative w-full d-flex max-w-xs">
+                        <select id="sort"
+                        class="form-control appearance-none w-full rounded-lg border border-gray-300 px-4 py-2 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
+                        <option value="featured">Featured</option>
+                        <option value="low">↑ Price (Low to High)</option>
+                        <option value="high">↓ Price (High to Low)</option>
+                        </select>
+                        <!-- Custom dropdown arrow -->
+                        <span style="position: relative; top: 9px; right: 25px;" class="pointer-events-none">
+                        ▼
+                        </span>
+                    </div>
                 </div>
 
             </div>
@@ -92,10 +94,18 @@ Zap-Resell Shop
                                 class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
 
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i
+                                    <li><a class="btn btn-success text-white mt-2" href="{% url "details" product.id %}"><i
                                                 class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i
-                                                class="fas fa-cart-plus"></i></a></li>
+                                    <li>
+                                        
+                                        <form method="post" action="{% url "add-cart" product.id%}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-success text-white mt-2"><i
+                                                class="fas fa-cart-plus"></i></button>
+
+                                        </form>
+                                            
+                                    </li>
                                 </ul>
                             </div>
                         </div>

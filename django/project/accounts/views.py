@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.decorators import login_required
+from .models import Profile, Address
 # Create your views here.
 def Login(request):
 
@@ -69,3 +70,60 @@ def Logout(request):
 
 def Admin_Restricted(request):
     return render(request, 'admin-restricted.html')
+
+@login_required( login_url='login' )
+def User_profile(request):
+    user = request.user
+
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    addresses = Address.objects.filter(user=user).order_by('-id')
+
+    if request.method == 'POST':
+        # ---------------------- Profile Update ----------------------
+        if 'profile-update' in request.POST:
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            phone = request.POST.get('phone')
+            gender = request.POST.get('gender')
+            avatar = request.FILES.get('avatar')
+
+            user.username = username
+            user.email = email
+            user.save()
+
+            if avatar:
+                profile.avatar = avatar
+            profile.phone = phone
+            profile.gender = gender
+            profile.save()
+
+            messages.success(request, 'Profile updated successfully.')
+
+        if 'add-address' in request.POST:
+            full_name = request.POST.get('full_name')
+            phone = request.POST.get('address_phone')
+            postal_code = request.POST.get('pincode')
+            address_text = request.POST.get('address_line')
+            city = request.POST.get('city')
+            state = request.POST.get('state')
+            address_type = request.POST.get('address_type')
+
+            new_address = Address(
+                user=user,
+                full_name=full_name,
+                phone=phone,
+                postal_code=postal_code,
+                address=address_text,
+                city=city,
+                state=state,
+                type=address_type
+            )
+            new_address.save()
+            messages.success(request, 'Address added successfully.')
+
+    data = {
+        'profile': profile,
+        'addresses': addresses
+    }
+    
+    return render(request, 'profile.html', data)

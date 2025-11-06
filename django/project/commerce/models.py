@@ -50,3 +50,4 @@ class Order(models.Model):
 
     def __str__(self):
         return f'Order: {self.product.name} by {self.user.username}'
+    

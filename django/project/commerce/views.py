@@ -28,6 +28,8 @@ def Shop(request):
             messages.error(request, 'Invalid product type selected.')
             return redirect('shop') 
         
+   
+        
     if 'sort' in request.GET:
         sort_option = request.GET['sort']
         if sort_option == 'low':
@@ -39,6 +41,10 @@ def Shop(request):
         else:
             messages.error(request, 'Invalid sorting option selected.')
             return redirect('shop')
+        
+    if 'q' in request.GET:
+        search_query = request.GET['q']
+        products = products.filter(name__icontains=search_query)    
 
     data = { 'categories': categories, 'products': products }
     return render(request, 'shop.html', data)
@@ -102,3 +108,50 @@ def Add_Product(request):
         return redirect('add_product')
 
     return render(request, 'add_product.html', data)
+
+@login_required( login_url='login' )
+def Product_details(request, id):
+    product = Product.objects.get(id = id)
+    data = {'product': product}
+    return render(request, 'details.html', data)
+
+@login_required( login_url='login' )
+def My_cart(request):
+    carts = Cart.objects.filter(user = request.user)
+
+    total_price = 0
+    for i in range(0, len(carts)):
+        total_price += carts[i].product.discounted_price * carts[i].quantity
+
+    data = {'carts': carts, 'total_price':total_price}
+    return render(request, 'cart.html', data)
+
+@login_required( login_url='login' )
+def Add_cart(request, id):
+     if request.method == 'POST':
+        user = request.user
+        product =  Product.objects.get(id = id)
+        new_cart = Cart(user = user, product = product)
+        new_cart.save()
+        messages.success(request, 'Item add to cart successfully!')
+        return redirect('cart')
+     
+@login_required( login_url='login' )
+def Remove_item(request, id):
+     if request.method == 'POST':
+        Cart.objects.get(id = id).delete()
+        messages.success(request, 'Item deleted successfully!')
+        return redirect('cart')
+     
+@login_required( login_url='login' )
+def Update_cart(request, id):
+     if request.method == 'POST':
+        new_quantity = request.POST.get('quantity')
+
+        cart = Cart.objects.get(id=id)
+        cart.quantity = new_quantity
+        cart.save()
+        
+        messages.success(request, 'Cart Updated Successfully!')
+        return redirect('cart')
+
